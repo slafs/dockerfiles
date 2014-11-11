@@ -17,3 +17,5 @@ RUN sed -i '97,99 s/^#//' /root/.bashrc
 
 # clean
 RUN apt-get clean
+
+VOLUME /salt

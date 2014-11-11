@@ -1,43 +1,43 @@
 master:
-    image: slafs/salt-master
+    image: slafs/salt-master-ubuntu-precise:v2014.1.13
 
 minioncentos7:
-    image: slafs/salt-minion-centos:centos7
+    image: slafs/salt-minion-centos-centos7:v2014.1.13
     hostname: minion-centos-centos7
     domainname: foo.com
     links:
         - master:saltmaster
 
 minioncentos6:
-    image: slafs/salt-minion-centos:centos6
+    image: slafs/salt-minion-centos-centos6:v2014.1.13
     hostname: minion-centos-centos6
     domainname: foo.com
     links:
         - master:saltmaster
 
 miniontrusty:
-    image: slafs/salt-minion-ubuntu:trusty
+    image: slafs/salt-minion-ubuntu-trusty:v2014.1.13
     hostname: minion-ubuntu-trusty
     domainname: foo.com
     links:
         - master:saltmaster
 
 minionprecise:
-    image: slafs/salt-minion-ubuntu:precise
+    image: slafs/salt-minion-ubuntu-precise:v2014.1.13
     hostname: minion-ubuntu-precise
     domainname: foo.com
     links:
         - master:saltmaster
 
 minionjessie:
-    image: slafs/salt-minion-debian:jessie
+    image: slafs/salt-minion-debian-jessie:v2014.1.13
     hostname: minion-debian-jessie
     domainname: foo.com
     links:
         - master:saltmaster
 
 minionwheezy:
-    image: slafs/salt-minion-debian:wheezy
+    image: slafs/salt-minion-debian-wheezy:v2014.1.13
     hostname: minion-debian-wheezy
     domainname: foo.com
     links:
