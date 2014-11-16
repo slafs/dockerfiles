@@ -1,4 +1,4 @@
-FROM ubuntu-upstart:trusty
+FROM ubuntu:trusty
 MAINTAINER slafs
 
 RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q curl patch bash-completion
@@ -16,14 +16,20 @@ RUN ln -s /etc/rc2.d /etc/rc.d
 RUN bash /tmp/bootstrap_salt.sh -d -M -S -D -X -U -P git v2014.7.0
 
 # just in case
-RUN mkdir -p /etc/salt/minion.d
+RUN mkdir -p /etc/salt/master.d
 
-ADD minion.conf /etc/salt/minion.d/minion.conf
+ADD master.conf /etc/salt/master.d/master.conf
 
-# make salt-minion start with init
-RUN sed -i '3,5 s/^/#/' /etc/init/salt-minion.conf
-RUN sed -i '6 s/^/start on runlevel [2345]\n/' /etc/init/salt-minion.conf
+# make salt-master start with init (this is redundant cause we don't have upstart here)
+RUN sed -i '3,5 s/^/#/' /etc/init/salt-master.conf
+RUN sed -i '6 s/^/start on runlevel [2345]\n/' /etc/init/salt-master.conf
 
-#CMD ["salt-minion", "-l", "debug"]
+# uncomment bash autocompletion on root
+RUN sed -i '97,99 s/^#//' /root/.bashrc
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD ["salt-master", "-l", "debug"]
+
+# clean
+RUN apt-get clean
+
+VOLUME /salt
