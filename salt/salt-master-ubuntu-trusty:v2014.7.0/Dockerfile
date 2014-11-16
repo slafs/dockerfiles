@@ -24,10 +24,16 @@ ADD master.conf /etc/salt/master.d/master.conf
 RUN sed -i '3,5 s/^/#/' /etc/init/salt-master.conf
 RUN sed -i '6 s/^/start on runlevel [2345]\n/' /etc/init/salt-master.conf
 
+# bash autocompletion
+ADD salt.bash /tmp/salt.bash
+RUN cp /tmp/salt.bash /etc/bash_completion.d/salt.bash
 # uncomment bash autocompletion on root
 RUN sed -i '97,99 s/^#//' /root/.bashrc
 
 CMD ["salt-master", "-l", "debug"]
+
+ENV HOME /root
+ENV TERM xterm
 
 # clean
 RUN apt-get clean
