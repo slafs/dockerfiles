@@ -35,3 +35,7 @@ For example:
 
 Keep in mind that there might be other caveats.
 
+Docker automated build
+======================
+
+You can find a Docker automated build here: https://registry.hub.docker.com/u/slafs/centos7-systemd/
