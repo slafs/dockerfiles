@@ -1,7 +1,19 @@
 FROM centos:6
 
-# remove several traces of centos python
-RUN yum erase -y python
+# Install yum dependencies
+RUN yum -y update && \
+    yum groupinstall -y development && \
+    yum install -y \
+    bzip2-devel \
+    git \
+    hostname \
+    openssl \
+    openssl-devel \
+    sqlite-devel \
+    sudo \
+    tar \
+    curl \
+    zlib-dev
 
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
@@ -27,7 +39,7 @@ RUN set -x \
 	&& make -j$(nproc) \
 	&& make install \
 	&& ldconfig \
-	&& curl -SL 'https://bootstrap.pypa.io/get-pip.py' | python2 \
+	&& curl -SL 'https://bootstrap.pypa.io/get-pip.py' | python2.7 \
 	&& pip install --no-cache-dir --upgrade pip==$PYTHON_PIP_VERSION \
 	&& find /usr/local \
 		\( -type d -a -name test -o -name tests \) \
@@ -38,4 +50,4 @@ RUN set -x \
 # install "virtualenv", since the vast majority of users of this image will want it
 RUN pip install --no-cache-dir virtualenv
 
-CMD ["python2"]
+CMD ["python2.7"]
