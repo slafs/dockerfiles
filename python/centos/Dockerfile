@@ -38,8 +38,11 @@ RUN set -x \
 	&& ./configure --enable-shared --enable-unicode=ucs4 \
 	&& make -j$(nproc) \
 	&& make install \
-	&& ldconfig \
-	&& curl -SL 'https://bootstrap.pypa.io/get-pip.py' | python2.7 \
+	&& ldconfig
+
+ENV LD_LIBRARY_PATH /usr/local/lib
+
+RUN curl -SL 'https://bootstrap.pypa.io/get-pip.py' | python2.7 \
 	&& pip install --no-cache-dir --upgrade pip==$PYTHON_PIP_VERSION \
 	&& find /usr/local \
 		\( -type d -a -name test -o -name tests \) \
