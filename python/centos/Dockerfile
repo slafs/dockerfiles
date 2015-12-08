@@ -1,7 +1,7 @@
 FROM centos:6
 
 # remove several traces of centos python
-RUN yum erase -y python*
+RUN yum erase -y python
 
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
